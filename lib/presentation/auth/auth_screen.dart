@@ -10,10 +10,28 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Column(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          flexibleSpace: const Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TabBar(
+                labelColor: AppColors.red,
+                unselectedLabelColor: AppColors.gray60,
+                indicatorColor: AppColors.red,
+                indicatorSize: TabBarIndicatorSize.tab,
+                tabs: [
+                  Tab(text: 'Войти'),
+                  Tab(text: 'Регистрация'),
+                ],
+              ),
+            ],
+          ),
+        ),
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 60.h),

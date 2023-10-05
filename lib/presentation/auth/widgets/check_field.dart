@@ -58,33 +58,6 @@ class RregisterCheckboxFieldStateWidget extends State<CheckFieldWidget> {
             ],
           ),
         ),
-        // Column(
-        //   children: [
-        //     RichText(
-        //       text: const TextSpan(
-        //         style: TextStyle(
-        //           color: AppColors.black,
-        //         ),
-        //         children: [
-        //           TextSpan(),
-        //           TextSpan(),
-
-        //         ],
-        //       ),
-        //     ),
-        //     RichText(
-        //       text: const TextSpan(
-        //         style: TextStyle(
-        //           color: AppColors.black,
-        //         ),
-        //         children: [
-        //           TextSpan(),
-        //           TextSpan(),
-        //         ],
-        //       ),
-        //     )
-        //   ],
-        // )
       ],
     );
   }

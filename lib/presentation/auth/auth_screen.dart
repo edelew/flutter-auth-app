@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth_app/core/utils/colors.dart';
+import 'package:flutter_auth_app/presentation/auth/shared_widgets/custom_button.dart';
 import 'package:flutter_auth_app/presentation/auth/shared_widgets/custom_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,15 +15,29 @@ class AuthScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 60.h),
-            const Text('Регистрация нового аккаунта'),
+            Text(
+              'Регистрация нового аккаунта',
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 18.sp,
+              ),
+            ),
             SizedBox(height: 40.h),
             const CustomTextField(
               labelText: 'Номер телефона',
             ),
             SizedBox(height: 40.h),
-            const Text('Выслать SMS-код'),
+            CustomButtonWidget(
+              title: 'Выслать SMS-код',
+              isElevated: true,
+              onPressed: () {},
+            ),
             SizedBox(height: 18.h),
-            const Text('Выслать повторно'),
+            CustomButtonWidget(
+              title: 'Выслать повторно',
+              isElevated: false,
+              onPressed: () {},
+            ),
             SizedBox(height: 50.h),
             const CustomTextField(
               labelText: 'Код из SMS',

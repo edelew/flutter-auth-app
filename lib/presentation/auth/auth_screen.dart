@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/core/utils/colors.dart';
-import 'package:flutter_auth_app/presentation/auth/shared_widgets/custom_button.dart';
-import 'package:flutter_auth_app/presentation/auth/shared_widgets/custom_text_field.dart';
+import 'package:flutter_auth_app/presentation/auth/widgets/check_field.dart';
+import 'package:flutter_auth_app/presentation/shared_widgets/custom_button.dart';
+import 'package:flutter_auth_app/presentation/shared_widgets/custom_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -43,9 +44,13 @@ class AuthScreen extends StatelessWidget {
               labelText: 'Код из SMS',
             ),
             SizedBox(height: 46.h),
-            const Text('Ознакомлен с договором оферты и согласен на рассылку'),
+            const CheckFieldWidget(),
             SizedBox(height: 46.h),
-            const Text('Далее'),
+            CustomButtonWidget(
+              title: 'Далее',
+              isElevated: true,
+              onPressed: () {},
+            ),
           ],
         ),
       ),

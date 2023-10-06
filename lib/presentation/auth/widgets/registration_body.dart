@@ -25,6 +25,7 @@ class RegistrationBody extends StatelessWidget {
         SizedBox(height: 40.h),
         const CustomTextField(
           labelText: 'Номер телефона',
+          inputType: InputType.phoneNumber,
         ),
         SizedBox(height: 40.h),
         CustomButtonWidget(
@@ -41,6 +42,7 @@ class RegistrationBody extends StatelessWidget {
         SizedBox(height: 50.h),
         const CustomTextField(
           labelText: 'Код из SMS',
+          inputType: InputType.smsCode,
         ),
         SizedBox(height: 46.h),
         const _CheckFieldWidget(),

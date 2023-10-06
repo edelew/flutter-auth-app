@@ -23,10 +23,16 @@ class LoginBody extends StatelessWidget {
         SizedBox(height: 40.h),
         const CustomTextField(
           labelText: 'Номер телефона',
+          inputType: InputType.phoneNumber,
+          // inputFormatters: [
+          //   MaskedInputFormatter('+7 (###) ###-##-##'),
+          // ],
         ),
         SizedBox(height: 16.h),
         const CustomTextField(
           labelText: 'Пароль',
+          inputType: InputType.password,
+          isPassword: true,
         ),
         SizedBox(height: 40.h),
         CustomButtonWidget(

@@ -13,6 +13,8 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_svg: ^2.0.7
   flutter_multi_formatter: ^2.11.12
+  firebase_core: ^2.17.0
+  firebase_auth: ^4.10.1
 
 
 dev_dependencies:

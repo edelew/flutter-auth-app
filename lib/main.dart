@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_auth_app/core/utils/colors.dart';
 import 'package:flutter_auth_app/firebase_options.dart';
 import 'package:flutter_auth_app/presentation/auth/auth_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,8 +27,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        useMaterial3: true,
-      ),
+          useMaterial3: true,
+          scaffoldBackgroundColor: AppColors.white,
+          appBarTheme: const AppBarTheme(backgroundColor: AppColors.white)),
       home: ScreenUtilInit(
         builder: (context, widget) {
           return const AuthScreen();

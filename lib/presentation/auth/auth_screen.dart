@@ -11,10 +11,8 @@ class AuthScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-          backgroundColor: AppColors.white,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            backgroundColor: AppColors.white,
             flexibleSpace: const Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

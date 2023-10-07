@@ -21,6 +21,8 @@ class _RegistrationBodyState extends State<RegistrationBody> {
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _smsCodeController = TextEditingController();
 
+  bool checkboxDefaultValue = false;
+
   String _verificationCode = '';
 
   @override
@@ -71,18 +73,29 @@ class _RegistrationBodyState extends State<RegistrationBody> {
           controller: _smsCodeController,
         ),
         SizedBox(height: 46.h),
-        const _CheckFieldWidget(),
+        _CheckFieldWidget(
+          defaultValue: checkboxDefaultValue,
+          onTap: checkboxTap,
+        ),
         SizedBox(height: 46.h),
         CustomButtonWidget(
           title: 'Далее',
           isElevated: true,
-          onPressed: () => signIn(
-            _verificationCode,
-            _smsCodeController.text,
-          ),
+          onPressed: checkboxDefaultValue
+              ? () => signIn(
+                    _verificationCode,
+                    _smsCodeController.text,
+                  )
+              : null,
         ),
       ],
     );
+  }
+
+  void checkboxTap() {
+    setState(() {
+      checkboxDefaultValue = !checkboxDefaultValue;
+    });
   }
 
   void phoneAuth(String phoneNumber) async {
@@ -126,66 +139,67 @@ class _RegistrationBodyState extends State<RegistrationBody> {
 }
 
 class _CheckFieldWidget extends StatefulWidget {
-  const _CheckFieldWidget({super.key});
+  const _CheckFieldWidget({
+    super.key,
+    required this.defaultValue,
+    required this.onTap,
+  });
+
+  final bool defaultValue;
+  final GestureTapCallback onTap;
 
   @override
   State<_CheckFieldWidget> createState() => RregisterCheckboxFieldStateWidget();
 }
 
 class RregisterCheckboxFieldStateWidget extends State<_CheckFieldWidget> {
-  var isPressed = false;
-
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: checkboxTap,
-          child: SvgPicture.asset(
-            isPressed ? AppIcons.checkboxPressed : AppIcons.checkboxEnabled,
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            widget.defaultValue
+                ? AppIcons.checkboxPressed
+                : AppIcons.checkboxEnabled,
           ),
-        ),
-        SizedBox(
-          width: 10.w,
-        ),
-        RichText(
-          text: TextSpan(
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w400,
-              height: 18.h / 12.sp,
+          SizedBox(
+            width: 10.w,
+          ),
+          RichText(
+            text: TextSpan(
+              style: TextStyle(
+                color: AppColors.black,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+                height: 18.h / 12.sp,
+              ),
+              children: const [
+                TextSpan(
+                  text: 'Ознакомлен с ',
+                ),
+                TextSpan(
+                  text: 'Договором оферты',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                TextSpan(
+                  text: '\nи согласен на ',
+                ),
+                TextSpan(
+                  text: 'Рассылку',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
             ),
-            children: const [
-              TextSpan(
-                text: 'Ознакомлен с ',
-              ),
-              TextSpan(
-                text: 'Договором оферты',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-              TextSpan(
-                text: '\nи согласен на ',
-              ),
-              TextSpan(
-                text: 'Рассылку',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
-  }
-
-  void checkboxTap() {
-    setState(() {
-      isPressed = !isPressed;
-    });
   }
 }

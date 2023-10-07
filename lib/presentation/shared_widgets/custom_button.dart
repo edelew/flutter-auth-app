@@ -4,19 +4,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   const CustomButtonWidget({
+    required this.title,
+    required this.isElevated,
     required this.onPressed,
     this.height,
     this.width,
-    required this.title,
-    required this.isElevated,
     super.key,
   });
 
-  final VoidCallback? onPressed;
-  final double? height;
-  final double? width;
   final String title;
+
   final bool isElevated;
+
+  final VoidCallback? onPressed;
+
+  final double? height;
+
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +30,16 @@ class CustomButtonWidget extends StatelessWidget {
         width: width ?? 210.w,
         child: ElevatedButton(
           onPressed: onPressed,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(AppColors.red),
-            foregroundColor: MaterialStateProperty.all(AppColors.white),
-            elevation: MaterialStateProperty.all(0),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100.r),
-              ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.red,
+            foregroundColor: AppColors.white,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100.r),
             ),
-            textStyle: MaterialStateProperty.all(
-              TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14.sp,
-              ),
+            textStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14.sp,
             ),
           ),
           child: Text(

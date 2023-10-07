@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth_app/core/router/app_router.gr.dart';
 import 'package:flutter_auth_app/core/utils/colors.dart';
 import 'package:flutter_auth_app/core/utils/icons.dart';
 import 'package:flutter_auth_app/presentation/shared_widgets/custom_button.dart';
@@ -88,7 +90,10 @@ class _RegistrationBodyState extends State<RegistrationBody> {
     await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
+      verificationFailed: (FirebaseAuthException e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      },
       codeSent: (String verificationId, int? resendToken) async {
         setState(() {
           _verificationCode = verificationId;
@@ -111,6 +116,10 @@ class _RegistrationBodyState extends State<RegistrationBody> {
         if (value.user != null) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('Юзер зареган')));
+
+          AutoRouter.of(context).push(
+            const SetProfileRoute(),
+          );
         }
       });
     } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/core/utils/colors.dart';
 import 'package:flutter_auth_app/core/utils/icons.dart';
@@ -6,8 +7,26 @@ import 'package:flutter_auth_app/presentation/shared_widgets/custom_text_field.d
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class RegistrationBody extends StatelessWidget {
+class RegistrationBody extends StatefulWidget {
   const RegistrationBody({super.key});
+
+  @override
+  State<RegistrationBody> createState() => _RegistrationBodyState();
+}
+
+class _RegistrationBodyState extends State<RegistrationBody> {
+  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _smsCodeController = TextEditingController();
+
+  String _verificationCode = '';
+
+  @override
+  void dispose() {
+    _numberController.dispose();
+    _smsCodeController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +42,18 @@ class RegistrationBody extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40.h),
-        const CustomTextField(
+        CustomTextField(
           labelText: 'Номер телефона',
           inputType: InputType.phoneNumber,
+          controller: _numberController,
         ),
         SizedBox(height: 40.h),
         CustomButtonWidget(
           title: 'Выслать SMS-код',
           isElevated: true,
-          onPressed: () {},
+          onPressed: () => phoneAuth(
+            _numberController.text,
+          ),
         ),
         SizedBox(height: 18.h),
         CustomButtonWidget(
@@ -40,9 +62,10 @@ class RegistrationBody extends StatelessWidget {
           onPressed: () {},
         ),
         SizedBox(height: 50.h),
-        const CustomTextField(
+        CustomTextField(
           labelText: 'Код из SMS',
           inputType: InputType.smsCode,
+          controller: _smsCodeController,
         ),
         SizedBox(height: 46.h),
         const _CheckFieldWidget(),
@@ -50,10 +73,50 @@ class RegistrationBody extends StatelessWidget {
         CustomButtonWidget(
           title: 'Далее',
           isElevated: true,
-          onPressed: () {},
+          onPressed: () => signIn(
+            _verificationCode,
+            _smsCodeController.text,
+          ),
         ),
       ],
     );
+  }
+
+  void phoneAuth(String phoneNumber) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    await auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) async {
+        setState(() {
+          _verificationCode = verificationId;
+        });
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+
+    print('успешнооо');
+  }
+
+  void signIn(String verificationCode, String smsCode) async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithCredential(PhoneAuthProvider.credential(
+        verificationId: verificationCode,
+        smsCode: smsCode,
+      ))
+          .then((value) async {
+        if (value.user != null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Юзер зареган')));
+        }
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
   }
 }
 

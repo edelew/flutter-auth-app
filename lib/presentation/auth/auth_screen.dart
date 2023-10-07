@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_auth_app/core/utils/colors.dart';
 import 'package:flutter_auth_app/presentation/auth/widgets/login_body.dart';
 import 'package:flutter_auth_app/presentation/auth/widgets/registration_body.dart';
 
+@RoutePage()
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
 

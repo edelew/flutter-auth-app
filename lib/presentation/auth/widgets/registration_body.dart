@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/core/router/app_router.gr.dart';
+import 'package:flutter_auth_app/core/services/snack_bar.dart';
 import 'package:flutter_auth_app/core/utils/colors.dart';
 import 'package:flutter_auth_app/core/utils/icons.dart';
 import 'package:flutter_auth_app/presentation/shared_widgets/custom_button.dart';
@@ -91,8 +92,7 @@ class _RegistrationBodyState extends State<RegistrationBody> {
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.toString())));
+        SnackBarService.showSnackBar(context, e.toString());
       },
       codeSent: (String verificationId, int? resendToken) async {
         setState(() {
@@ -101,8 +101,6 @@ class _RegistrationBodyState extends State<RegistrationBody> {
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
-
-    print('успешнооо');
   }
 
   void signIn(String verificationCode, String smsCode) async {
@@ -114,8 +112,7 @@ class _RegistrationBodyState extends State<RegistrationBody> {
       ))
           .then((value) async {
         if (value.user != null) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Юзер зареган')));
+          SnackBarService.showSnackBar(context, 'Юзер зареган');
 
           AutoRouter.of(context).push(
             const SetProfileRoute(),
@@ -123,8 +120,7 @@ class _RegistrationBodyState extends State<RegistrationBody> {
         }
       });
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+      SnackBarService.showSnackBar(context, e.toString());
     }
   }
 }

@@ -108,7 +108,11 @@ class _RegistrationBodyState extends State<RegistrationBody> {
                   CustomButtonWidget(
                     title: 'Выслать повторно',
                     isElevated: false,
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<AuthBloc>().add(PhoneVerifyEvent(
+                            _numberController.text,
+                          ));
+                    },
                   ),
                   SizedBox(height: 50.h),
                   CustomTextField(

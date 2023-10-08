@@ -14,7 +14,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<OnCodeSentEvent>(_onCodeSentEvent);
   }
 
-  String _verificationCode = '';
+  String? _verificationCode;
+  int? _resendToken;
 
   _onPhoneVerifyEvent(PhoneVerifyEvent event, Emitter<AuthState> emit) async {
     emit(const AuthState.loading());
@@ -28,6 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       codeSent: (String verificationId, int? resendToken) async {
         add(OnCodeSentEvent(verificationId, resendToken));
       },
+      forceResendingToken: _resendToken,
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
@@ -38,7 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await FirebaseAuth.instance.signInWithCredential(
         PhoneAuthProvider.credential(
-          verificationId: _verificationCode,
+          verificationId: _verificationCode!,
           smsCode: event.smsCode,
         ),
       );
@@ -55,6 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _onCodeSentEvent(OnCodeSentEvent event, Emitter<AuthState> emit) {
     _verificationCode = event.verificationId;
+    _resendToken = event.resendToken;
     emit(const AuthState.verificationSuccess());
   }
 }

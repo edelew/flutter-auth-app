@@ -11,32 +11,17 @@ class CustomTextField extends StatefulWidget {
     Key? key,
     required this.labelText,
     required this.inputType,
-    this.error,
     this.controller,
-    this.onValidate,
-    this.autofocus = false,
     this.isPassword = false,
-    this.contentPadding,
-    this.onChanged,
   }) : super(key: key);
 
   final String labelText;
 
   final InputType inputType;
 
-  final String? error;
-
   final TextEditingController? controller;
 
-  final String? Function(String?)? onValidate;
-
-  final ValueChanged<String>? onChanged;
-
   final bool isPassword;
-
-  final bool autofocus;
-
-  final EdgeInsets? contentPadding;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -61,7 +46,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return SizedBox(
       width: 210.w,
       child: TextFormField(
-        autofocus: widget.autofocus,
         focusNode: myFocusNode,
         controller: widget.controller,
         inputFormatters: selectInputFormatters(widget.inputType),
@@ -70,7 +54,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         cursorColor: AppColors.black,
         onTap: _requestFocus,
         decoration: InputDecoration(
-          contentPadding: widget.contentPadding,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: widget.labelText,
           hoverColor: AppColors.red,
@@ -98,11 +81,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
             borderRadius: BorderRadius.circular(8.r),
           ),
         ),
-        validator: widget.onValidate,
         obscureText: !_contentVisible,
         enableSuggestions: widget.isPassword ? false : true,
         autocorrect: widget.isPassword ? false : true,
-        onChanged: widget.onChanged,
       ),
     );
   }
@@ -130,7 +111,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     switch (inputType) {
       case InputType.phoneNumber:
         return [
-          MaskedInputFormatter('+7 (###) ###-##-##'),
+          MaskedInputFormatter('+# (###) ###-##-##'),
         ];
       default:
         return [];

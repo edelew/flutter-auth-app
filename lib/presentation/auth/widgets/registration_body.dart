@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/core/router/app_router.gr.dart';
 import 'package:flutter_auth_app/core/services/snack_bar.dart';
@@ -100,9 +99,6 @@ class _RegistrationBodyState extends State<RegistrationBody> {
                             _numberController.text,
                           ));
                     },
-                    // onPressed: () => phoneAuth(
-                    //   _numberController.text,
-                    // ),
                   ),
                   SizedBox(height: 18.h),
                   CustomButtonWidget(
@@ -153,45 +149,6 @@ class _RegistrationBodyState extends State<RegistrationBody> {
       checkboxDefaultValue = !checkboxDefaultValue;
     });
   }
-
-  // void phoneAuth(String phoneNumber) async {
-  //   FirebaseAuth auth = FirebaseAuth.instance;
-
-  //   await auth.verifyPhoneNumber(
-  //     phoneNumber: phoneNumber,
-  //     verificationCompleted: (PhoneAuthCredential credential) {},
-  //     verificationFailed: (FirebaseAuthException e) {
-  //       SnackBarService.showSnackBar(context, e.toString());
-  //     },
-  //     codeSent: (String verificationId, int? resendToken) async {
-  //       setState(() {
-  //         _verificationCode = verificationId;
-  //       });
-  //     },
-  //     codeAutoRetrievalTimeout: (String verificationId) {},
-  //   );
-  // }
-
-  // void signIn(String verificationCode, String smsCode) async {
-  //   try {
-  //     await FirebaseAuth.instance
-  //         .signInWithCredential(PhoneAuthProvider.credential(
-  //       verificationId: verificationCode,
-  //       smsCode: smsCode,
-  //     ))
-  //         .then((value) async {
-  //       if (value.user != null) {
-  //         SnackBarService.showSnackBar(context, 'Юзер зареган');
-
-  //         AutoRouter.of(context).push(
-  //           const SetProfileRoute(),
-  //         );
-  //       }
-  //     });
-  //   } catch (e) {
-  //     SnackBarService.showSnackBar(context, e.toString());
-  //   }
-  // }
 }
 
 class _CheckFieldWidget extends StatefulWidget {

@@ -10,22 +10,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(const AuthState.initial()) {
     on<PhoneVerifyEvent>(_onPhoneVerifyEvent);
     on<SignInEvent>(_onSignInEvent);
+    on<OnVerificationFailedEvent>(_onVerificationFailedEvent);
+    on<OnCodeSentEvent>(_onCodeSentEvent);
   }
 
   String _verificationCode = '';
 
   _onPhoneVerifyEvent(PhoneVerifyEvent event, Emitter<AuthState> emit) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+    emit(const AuthState.loading());
 
-    await auth.verifyPhoneNumber(
+    await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: event.phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {
-        emit(AuthState.verificationError(e));
+        add(OnVerificationFailedEvent(e));
       },
       codeSent: (String verificationId, int? resendToken) async {
-        _verificationCode = verificationId;
-        print('номерномерномер');
+        add(OnCodeSentEvent(verificationId, resendToken));
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
@@ -33,6 +34,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _onSignInEvent(SignInEvent event, Emitter<AuthState> emit) async {
     try {
+      emit(const AuthState.loading());
+
       await FirebaseAuth.instance.signInWithCredential(
         PhoneAuthProvider.credential(
           verificationId: _verificationCode,
@@ -43,5 +46,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } on FirebaseAuthException catch (e) {
       emit(AuthState.wrongSmsCode(e));
     }
+  }
+
+  _onVerificationFailedEvent(
+      OnVerificationFailedEvent event, Emitter<AuthState> emit) {
+    emit(AuthState.verificationError(event.exception));
+  }
+
+  _onCodeSentEvent(OnCodeSentEvent event, Emitter<AuthState> emit) {
+    _verificationCode = event.verificationId;
+    emit(const AuthState.verificationSuccess());
   }
 }

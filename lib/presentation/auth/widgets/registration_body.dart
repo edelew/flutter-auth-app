@@ -5,8 +5,10 @@ import 'package:flutter_auth_app/core/router/app_router.gr.dart';
 import 'package:flutter_auth_app/core/services/snack_bar.dart';
 import 'package:flutter_auth_app/core/utils/colors.dart';
 import 'package:flutter_auth_app/core/utils/icons.dart';
+import 'package:flutter_auth_app/presentation/auth/bloc/auth_bloc.dart';
 import 'package:flutter_auth_app/presentation/shared_widgets/custom_button.dart';
 import 'package:flutter_auth_app/presentation/shared_widgets/custom_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -23,7 +25,9 @@ class _RegistrationBodyState extends State<RegistrationBody> {
 
   bool checkboxDefaultValue = false;
 
-  String _verificationCode = '';
+  late Widget registrationBody;
+
+  // String _verificationCode = '';
 
   @override
   void dispose() {
@@ -35,60 +39,108 @@ class _RegistrationBodyState extends State<RegistrationBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(height: 60.h),
-        Text(
-          'Регистрация нового аккаунта',
-          style: TextStyle(
-            color: AppColors.black,
-            fontSize: 18.sp,
-          ),
-        ),
-        SizedBox(height: 40.h),
-        CustomTextField(
-          labelText: 'Номер телефона',
-          inputType: InputType.phoneNumber,
-          controller: _numberController,
-        ),
-        SizedBox(height: 40.h),
-        CustomButtonWidget(
-          title: 'Выслать SMS-код',
-          isElevated: true,
-          onPressed: () => phoneAuth(
-            _numberController.text,
-          ),
-        ),
-        SizedBox(height: 18.h),
-        CustomButtonWidget(
-          title: 'Выслать повторно',
-          isElevated: false,
-          onPressed: () {},
-        ),
-        SizedBox(height: 50.h),
-        CustomTextField(
-          labelText: 'Код из SMS',
-          inputType: InputType.smsCode,
-          controller: _smsCodeController,
-        ),
-        SizedBox(height: 46.h),
-        _CheckFieldWidget(
-          defaultValue: checkboxDefaultValue,
-          onTap: checkboxTap,
-        ),
-        SizedBox(height: 46.h),
-        CustomButtonWidget(
-          title: 'Далее',
-          isElevated: true,
-          onPressed: checkboxDefaultValue
-              ? () => signIn(
-                    _verificationCode,
-                    _smsCodeController.text,
-                  )
-              : null,
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => AuthBloc(),
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is VerificationErrorAuthState) {
+            SnackBarService.showSnackBar(context, state.exception.toString());
+          }
+
+          if (state is VerificationSuccessAuthState) {
+            SnackBarService.showSnackBar(
+                context, 'SMS-код был отправлен на ваш телефон');
+          }
+
+          if (state is WrongSmsCodeAuthState) {
+            SnackBarService.showSnackBar(context, state.exception.toString());
+          }
+
+          if (state is CorrectSmsCodeAuthState) {
+            SnackBarService.showSnackBar(context, 'Юзер зареган');
+
+            AutoRouter.of(context).push(
+              const SetProfileRoute(),
+            );
+          }
+        },
+        builder: (context, state) {
+          state.maybeWhen(
+            loading: () {
+              registrationBody = const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.red,
+                ),
+              );
+            },
+            orElse: () {
+              registrationBody = Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 60.h),
+                  Text(
+                    'Регистрация нового аккаунта',
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                  SizedBox(height: 40.h),
+                  CustomTextField(
+                    labelText: 'Номер телефона',
+                    inputType: InputType.phoneNumber,
+                    controller: _numberController,
+                  ),
+                  SizedBox(height: 40.h),
+                  CustomButtonWidget(
+                    title: 'Выслать SMS-код',
+                    isElevated: true,
+                    onPressed: () {
+                      context.read<AuthBloc>().add(PhoneVerifyEvent(
+                            _numberController.text,
+                          ));
+                    },
+                    // onPressed: () => phoneAuth(
+                    //   _numberController.text,
+                    // ),
+                  ),
+                  SizedBox(height: 18.h),
+                  CustomButtonWidget(
+                    title: 'Выслать повторно',
+                    isElevated: false,
+                    onPressed: () {},
+                  ),
+                  SizedBox(height: 50.h),
+                  CustomTextField(
+                    labelText: 'Код из SMS',
+                    inputType: InputType.smsCode,
+                    controller: _smsCodeController,
+                  ),
+                  SizedBox(height: 46.h),
+                  _CheckFieldWidget(
+                    defaultValue: checkboxDefaultValue,
+                    onTap: checkboxTap,
+                  ),
+                  SizedBox(height: 46.h),
+                  CustomButtonWidget(
+                    title: 'Далее',
+                    isElevated: true,
+                    onPressed: checkboxDefaultValue
+                        ? () {
+                            context.read<AuthBloc>().add(SignInEvent(
+                                  _smsCodeController.text,
+                                ));
+                          }
+                        : null,
+                  ),
+                ],
+              );
+            },
+          );
+
+          return registrationBody;
+        },
+      ),
     );
   }
 
@@ -98,44 +150,44 @@ class _RegistrationBodyState extends State<RegistrationBody> {
     });
   }
 
-  void phoneAuth(String phoneNumber) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+  // void phoneAuth(String phoneNumber) async {
+  //   FirebaseAuth auth = FirebaseAuth.instance;
 
-    await auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {
-        SnackBarService.showSnackBar(context, e.toString());
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        setState(() {
-          _verificationCode = verificationId;
-        });
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-  }
+  //   await auth.verifyPhoneNumber(
+  //     phoneNumber: phoneNumber,
+  //     verificationCompleted: (PhoneAuthCredential credential) {},
+  //     verificationFailed: (FirebaseAuthException e) {
+  //       SnackBarService.showSnackBar(context, e.toString());
+  //     },
+  //     codeSent: (String verificationId, int? resendToken) async {
+  //       setState(() {
+  //         _verificationCode = verificationId;
+  //       });
+  //     },
+  //     codeAutoRetrievalTimeout: (String verificationId) {},
+  //   );
+  // }
 
-  void signIn(String verificationCode, String smsCode) async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithCredential(PhoneAuthProvider.credential(
-        verificationId: verificationCode,
-        smsCode: smsCode,
-      ))
-          .then((value) async {
-        if (value.user != null) {
-          SnackBarService.showSnackBar(context, 'Юзер зареган');
+  // void signIn(String verificationCode, String smsCode) async {
+  //   try {
+  //     await FirebaseAuth.instance
+  //         .signInWithCredential(PhoneAuthProvider.credential(
+  //       verificationId: verificationCode,
+  //       smsCode: smsCode,
+  //     ))
+  //         .then((value) async {
+  //       if (value.user != null) {
+  //         SnackBarService.showSnackBar(context, 'Юзер зареган');
 
-          AutoRouter.of(context).push(
-            const SetProfileRoute(),
-          );
-        }
-      });
-    } catch (e) {
-      SnackBarService.showSnackBar(context, e.toString());
-    }
-  }
+  //         AutoRouter.of(context).push(
+  //           const SetProfileRoute(),
+  //         );
+  //       }
+  //     });
+  //   } catch (e) {
+  //     SnackBarService.showSnackBar(context, e.toString());
+  //   }
+  // }
 }
 
 class _CheckFieldWidget extends StatefulWidget {

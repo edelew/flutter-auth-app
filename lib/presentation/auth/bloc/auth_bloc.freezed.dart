@@ -20,18 +20,26 @@ mixin _$AuthEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) phoneVerify,
     required TResult Function(String smsCode) signIn,
+    required TResult Function(FirebaseAuthException exception)
+        onVerificationFailed,
+    required TResult Function(String verificationId, int? resendToken)
+        onCodeSent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? phoneVerify,
     TResult? Function(String smsCode)? signIn,
+    TResult? Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult? Function(String verificationId, int? resendToken)? onCodeSent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? phoneVerify,
     TResult Function(String smsCode)? signIn,
+    TResult Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult Function(String verificationId, int? resendToken)? onCodeSent,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +47,25 @@ mixin _$AuthEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(PhoneVerifyEvent value) phoneVerify,
     required TResult Function(SignInEvent value) signIn,
+    required TResult Function(OnVerificationFailedEvent value)
+        onVerificationFailed,
+    required TResult Function(OnCodeSentEvent value) onCodeSent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PhoneVerifyEvent value)? phoneVerify,
     TResult? Function(SignInEvent value)? signIn,
+    TResult? Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult? Function(OnCodeSentEvent value)? onCodeSent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PhoneVerifyEvent value)? phoneVerify,
     TResult Function(SignInEvent value)? signIn,
+    TResult Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult Function(OnCodeSentEvent value)? onCodeSent,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -141,6 +156,10 @@ class _$PhoneVerifyEventImpl implements PhoneVerifyEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) phoneVerify,
     required TResult Function(String smsCode) signIn,
+    required TResult Function(FirebaseAuthException exception)
+        onVerificationFailed,
+    required TResult Function(String verificationId, int? resendToken)
+        onCodeSent,
   }) {
     return phoneVerify(phoneNumber);
   }
@@ -150,6 +169,8 @@ class _$PhoneVerifyEventImpl implements PhoneVerifyEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? phoneVerify,
     TResult? Function(String smsCode)? signIn,
+    TResult? Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult? Function(String verificationId, int? resendToken)? onCodeSent,
   }) {
     return phoneVerify?.call(phoneNumber);
   }
@@ -159,6 +180,8 @@ class _$PhoneVerifyEventImpl implements PhoneVerifyEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? phoneVerify,
     TResult Function(String smsCode)? signIn,
+    TResult Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult Function(String verificationId, int? resendToken)? onCodeSent,
     required TResult orElse(),
   }) {
     if (phoneVerify != null) {
@@ -172,6 +195,9 @@ class _$PhoneVerifyEventImpl implements PhoneVerifyEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(PhoneVerifyEvent value) phoneVerify,
     required TResult Function(SignInEvent value) signIn,
+    required TResult Function(OnVerificationFailedEvent value)
+        onVerificationFailed,
+    required TResult Function(OnCodeSentEvent value) onCodeSent,
   }) {
     return phoneVerify(this);
   }
@@ -181,6 +207,8 @@ class _$PhoneVerifyEventImpl implements PhoneVerifyEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PhoneVerifyEvent value)? phoneVerify,
     TResult? Function(SignInEvent value)? signIn,
+    TResult? Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult? Function(OnCodeSentEvent value)? onCodeSent,
   }) {
     return phoneVerify?.call(this);
   }
@@ -190,6 +218,8 @@ class _$PhoneVerifyEventImpl implements PhoneVerifyEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PhoneVerifyEvent value)? phoneVerify,
     TResult Function(SignInEvent value)? signIn,
+    TResult Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult Function(OnCodeSentEvent value)? onCodeSent,
     required TResult orElse(),
   }) {
     if (phoneVerify != null) {
@@ -275,6 +305,10 @@ class _$SignInEventImpl implements SignInEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String phoneNumber) phoneVerify,
     required TResult Function(String smsCode) signIn,
+    required TResult Function(FirebaseAuthException exception)
+        onVerificationFailed,
+    required TResult Function(String verificationId, int? resendToken)
+        onCodeSent,
   }) {
     return signIn(smsCode);
   }
@@ -284,6 +318,8 @@ class _$SignInEventImpl implements SignInEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String phoneNumber)? phoneVerify,
     TResult? Function(String smsCode)? signIn,
+    TResult? Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult? Function(String verificationId, int? resendToken)? onCodeSent,
   }) {
     return signIn?.call(smsCode);
   }
@@ -293,6 +329,8 @@ class _$SignInEventImpl implements SignInEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String phoneNumber)? phoneVerify,
     TResult Function(String smsCode)? signIn,
+    TResult Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult Function(String verificationId, int? resendToken)? onCodeSent,
     required TResult orElse(),
   }) {
     if (signIn != null) {
@@ -306,6 +344,9 @@ class _$SignInEventImpl implements SignInEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(PhoneVerifyEvent value) phoneVerify,
     required TResult Function(SignInEvent value) signIn,
+    required TResult Function(OnVerificationFailedEvent value)
+        onVerificationFailed,
+    required TResult Function(OnCodeSentEvent value) onCodeSent,
   }) {
     return signIn(this);
   }
@@ -315,6 +356,8 @@ class _$SignInEventImpl implements SignInEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(PhoneVerifyEvent value)? phoneVerify,
     TResult? Function(SignInEvent value)? signIn,
+    TResult? Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult? Function(OnCodeSentEvent value)? onCodeSent,
   }) {
     return signIn?.call(this);
   }
@@ -324,6 +367,8 @@ class _$SignInEventImpl implements SignInEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(PhoneVerifyEvent value)? phoneVerify,
     TResult Function(SignInEvent value)? signIn,
+    TResult Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult Function(OnCodeSentEvent value)? onCodeSent,
     required TResult orElse(),
   }) {
     if (signIn != null) {
@@ -339,6 +384,321 @@ abstract class SignInEvent implements AuthEvent {
   String get smsCode;
   @JsonKey(ignore: true)
   _$$SignInEventImplCopyWith<_$SignInEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnVerificationFailedEventImplCopyWith<$Res> {
+  factory _$$OnVerificationFailedEventImplCopyWith(
+          _$OnVerificationFailedEventImpl value,
+          $Res Function(_$OnVerificationFailedEventImpl) then) =
+      __$$OnVerificationFailedEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({FirebaseAuthException exception});
+}
+
+/// @nodoc
+class __$$OnVerificationFailedEventImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$OnVerificationFailedEventImpl>
+    implements _$$OnVerificationFailedEventImplCopyWith<$Res> {
+  __$$OnVerificationFailedEventImplCopyWithImpl(
+      _$OnVerificationFailedEventImpl _value,
+      $Res Function(_$OnVerificationFailedEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exception = null,
+  }) {
+    return _then(_$OnVerificationFailedEventImpl(
+      null == exception
+          ? _value.exception
+          : exception // ignore: cast_nullable_to_non_nullable
+              as FirebaseAuthException,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnVerificationFailedEventImpl implements OnVerificationFailedEvent {
+  const _$OnVerificationFailedEventImpl(this.exception);
+
+  @override
+  final FirebaseAuthException exception;
+
+  @override
+  String toString() {
+    return 'AuthEvent.onVerificationFailed(exception: $exception)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnVerificationFailedEventImpl &&
+            (identical(other.exception, exception) ||
+                other.exception == exception));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, exception);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnVerificationFailedEventImplCopyWith<_$OnVerificationFailedEventImpl>
+      get copyWith => __$$OnVerificationFailedEventImplCopyWithImpl<
+          _$OnVerificationFailedEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String phoneNumber) phoneVerify,
+    required TResult Function(String smsCode) signIn,
+    required TResult Function(FirebaseAuthException exception)
+        onVerificationFailed,
+    required TResult Function(String verificationId, int? resendToken)
+        onCodeSent,
+  }) {
+    return onVerificationFailed(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String phoneNumber)? phoneVerify,
+    TResult? Function(String smsCode)? signIn,
+    TResult? Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult? Function(String verificationId, int? resendToken)? onCodeSent,
+  }) {
+    return onVerificationFailed?.call(exception);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String phoneNumber)? phoneVerify,
+    TResult Function(String smsCode)? signIn,
+    TResult Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult Function(String verificationId, int? resendToken)? onCodeSent,
+    required TResult orElse(),
+  }) {
+    if (onVerificationFailed != null) {
+      return onVerificationFailed(exception);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PhoneVerifyEvent value) phoneVerify,
+    required TResult Function(SignInEvent value) signIn,
+    required TResult Function(OnVerificationFailedEvent value)
+        onVerificationFailed,
+    required TResult Function(OnCodeSentEvent value) onCodeSent,
+  }) {
+    return onVerificationFailed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PhoneVerifyEvent value)? phoneVerify,
+    TResult? Function(SignInEvent value)? signIn,
+    TResult? Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult? Function(OnCodeSentEvent value)? onCodeSent,
+  }) {
+    return onVerificationFailed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PhoneVerifyEvent value)? phoneVerify,
+    TResult Function(SignInEvent value)? signIn,
+    TResult Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult Function(OnCodeSentEvent value)? onCodeSent,
+    required TResult orElse(),
+  }) {
+    if (onVerificationFailed != null) {
+      return onVerificationFailed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnVerificationFailedEvent implements AuthEvent {
+  const factory OnVerificationFailedEvent(
+      final FirebaseAuthException exception) = _$OnVerificationFailedEventImpl;
+
+  FirebaseAuthException get exception;
+  @JsonKey(ignore: true)
+  _$$OnVerificationFailedEventImplCopyWith<_$OnVerificationFailedEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnCodeSentEventImplCopyWith<$Res> {
+  factory _$$OnCodeSentEventImplCopyWith(_$OnCodeSentEventImpl value,
+          $Res Function(_$OnCodeSentEventImpl) then) =
+      __$$OnCodeSentEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String verificationId, int? resendToken});
+}
+
+/// @nodoc
+class __$$OnCodeSentEventImplCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res, _$OnCodeSentEventImpl>
+    implements _$$OnCodeSentEventImplCopyWith<$Res> {
+  __$$OnCodeSentEventImplCopyWithImpl(
+      _$OnCodeSentEventImpl _value, $Res Function(_$OnCodeSentEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? verificationId = null,
+    Object? resendToken = freezed,
+  }) {
+    return _then(_$OnCodeSentEventImpl(
+      null == verificationId
+          ? _value.verificationId
+          : verificationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      freezed == resendToken
+          ? _value.resendToken
+          : resendToken // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnCodeSentEventImpl implements OnCodeSentEvent {
+  const _$OnCodeSentEventImpl(this.verificationId, this.resendToken);
+
+  @override
+  final String verificationId;
+  @override
+  final int? resendToken;
+
+  @override
+  String toString() {
+    return 'AuthEvent.onCodeSent(verificationId: $verificationId, resendToken: $resendToken)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnCodeSentEventImpl &&
+            (identical(other.verificationId, verificationId) ||
+                other.verificationId == verificationId) &&
+            (identical(other.resendToken, resendToken) ||
+                other.resendToken == resendToken));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, verificationId, resendToken);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnCodeSentEventImplCopyWith<_$OnCodeSentEventImpl> get copyWith =>
+      __$$OnCodeSentEventImplCopyWithImpl<_$OnCodeSentEventImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String phoneNumber) phoneVerify,
+    required TResult Function(String smsCode) signIn,
+    required TResult Function(FirebaseAuthException exception)
+        onVerificationFailed,
+    required TResult Function(String verificationId, int? resendToken)
+        onCodeSent,
+  }) {
+    return onCodeSent(verificationId, resendToken);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String phoneNumber)? phoneVerify,
+    TResult? Function(String smsCode)? signIn,
+    TResult? Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult? Function(String verificationId, int? resendToken)? onCodeSent,
+  }) {
+    return onCodeSent?.call(verificationId, resendToken);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String phoneNumber)? phoneVerify,
+    TResult Function(String smsCode)? signIn,
+    TResult Function(FirebaseAuthException exception)? onVerificationFailed,
+    TResult Function(String verificationId, int? resendToken)? onCodeSent,
+    required TResult orElse(),
+  }) {
+    if (onCodeSent != null) {
+      return onCodeSent(verificationId, resendToken);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PhoneVerifyEvent value) phoneVerify,
+    required TResult Function(SignInEvent value) signIn,
+    required TResult Function(OnVerificationFailedEvent value)
+        onVerificationFailed,
+    required TResult Function(OnCodeSentEvent value) onCodeSent,
+  }) {
+    return onCodeSent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PhoneVerifyEvent value)? phoneVerify,
+    TResult? Function(SignInEvent value)? signIn,
+    TResult? Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult? Function(OnCodeSentEvent value)? onCodeSent,
+  }) {
+    return onCodeSent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PhoneVerifyEvent value)? phoneVerify,
+    TResult Function(SignInEvent value)? signIn,
+    TResult Function(OnVerificationFailedEvent value)? onVerificationFailed,
+    TResult Function(OnCodeSentEvent value)? onCodeSent,
+    required TResult orElse(),
+  }) {
+    if (onCodeSent != null) {
+      return onCodeSent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnCodeSentEvent implements AuthEvent {
+  const factory OnCodeSentEvent(
+          final String verificationId, final int? resendToken) =
+      _$OnCodeSentEventImpl;
+
+  String get verificationId;
+  int? get resendToken;
+  @JsonKey(ignore: true)
+  _$$OnCodeSentEventImplCopyWith<_$OnCodeSentEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

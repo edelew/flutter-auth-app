@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_auth_app/core/router/app_router.gr.dart';
 import 'package:flutter_auth_app/core/utils/animations.dart';
 import 'package:flutter_auth_app/core/utils/colors.dart';
@@ -32,48 +33,53 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.red,
-      body: SafeArea(
-        child: Center(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Image.asset(AppImages.wheel),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Lottie.asset(
-                    AppAnimation.logo,
-                    width: 200.w,
-                    repeat: false,
-                    onLoaded: (composition) {
-                      _logoLontroller
-                        ..duration = composition.duration
-                        ..forward().whenComplete(
-                          () => AutoRouter.of(context).pushAndPopUntil(
-                            const AuthRoute(),
-                            predicate: (route) => false,
-                          ),
-                        );
-                    },
-                  ),
-                  AnimatedOpacity(
-                    duration: const Duration(seconds: 1),
-                    opacity: textOpacity,
-                    child: Text(
-                      'AutomApp',
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.w500,
-                        height: 47.h / 40.sp,
-                      ),
+    return AnnotatedRegion(
+      value: const SystemUiOverlayStyle(
+        systemNavigationBarColor: AppColors.red,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.red,
+        body: SafeArea(
+          child: Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(AppImages.wheel),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Lottie.asset(
+                      AppAnimation.logo,
+                      width: 200.w,
+                      repeat: false,
+                      onLoaded: (composition) {
+                        _logoLontroller
+                          ..duration = composition.duration
+                          ..forward().whenComplete(
+                            () => AutoRouter.of(context).pushAndPopUntil(
+                              const AuthRoute(),
+                              predicate: (route) => false,
+                            ),
+                          );
+                      },
                     ),
-                  )
-                ],
-              ),
-            ],
+                    AnimatedOpacity(
+                      duration: const Duration(seconds: 1),
+                      opacity: textOpacity,
+                      child: Text(
+                        'AutomApp',
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 40.sp,
+                          fontWeight: FontWeight.w500,
+                          height: 47.h / 40.sp,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

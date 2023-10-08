@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_app/core/utils/colors.dart';
-import 'package:flutter_auth_app/presentation/shared_widgets/custom_button.dart';
-import 'package:flutter_auth_app/presentation/shared_widgets/custom_text_field.dart';
+import 'package:flutter_auth_app/core/shared_widgets/custom_button.dart';
+import 'package:flutter_auth_app/core/shared_widgets/custom_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginBody extends StatelessWidget {
